@@ -15,12 +15,14 @@ def main(file, host, port, user, password):
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(host, port=port, username=user, password=password)
     sftp = client.open_sftp()  # open SFTP connection for file transfer
-    file_location = f"/tmp/{file}.py"
+    file_name = file.split("/")[-1]  # take last element after split
+    file_location = f"/tmp/{file_name}"
     sftp.put(file, file_location)  # transfer local file to SSH
     sftp.close()
 
     # execute command and loop through stdin
-    for line in client.exec_command(f"python {file_location}")[1]:
+    stdout = client.exec_command(f"python {file_location}")[1]
+    for line in stdout.read().splitlines():
         print(line)
 
     client.close()
