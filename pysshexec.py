@@ -6,9 +6,16 @@ import paramiko
 @click.command()
 @click.option("-f", "--file", help="File path and name.", required=True)
 @click.option("-h", "--host", help="Host address.", required=True)
-@click.option("-p", "--port", help="Server's port.", required=True)
-@click.option("-u", "--user", help="Username.", required=True)
-@click.option("-pw", "--password", help="SSH Passwrd.", required=True)
+@click.option("-p", "--port", help="Server's port.", default=22)
+@click.option(
+    "-u", "--user", help="Username.", default=lambda: os.environ.get("SSH_USER", "")
+)
+@click.option(
+    "-pw",
+    "--password",
+    help="SSH Passwrd.",
+    default=lambda: os.environ.get("SSH_PASSWORD", ""),
+)
 def main(file, host, port, user, password):
     """Function to get executed through CLI"""
     client = paramiko.SSHClient()
