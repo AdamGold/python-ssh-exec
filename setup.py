@@ -15,7 +15,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/AdamGold/python-ssh-exec",
     py_modules=["pysshexec"],
-    install_requires=["Click==7.0", "paramiko==2.4.2", "cryptography==2.4.2"],
+    install_requires=["Click==7.0", "paramiko==2.4.2", "cryptography==3.2"],
     entry_points="""
         [console_scripts]
         pyssh=pysshexec:main
